@@ -3,6 +3,7 @@
   "displayName": "Code Flowchart",
   "description": "See your code as a flowchart, explained in plain English or Japanese. 11 languages including Python, JavaScript, TypeScript, Java, C, C++, C#, Go, Rust, PHP and Ruby.",
   "version": "0.0.1",
+  "publisher": "SITHUTUN",
   "engines": {
     "vscode": "^1.85.0"
   },
