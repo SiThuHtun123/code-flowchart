@@ -1,0 +1,120 @@
+{
+  "name": "code-flowchart",
+  "displayName": "Code Flowchart",
+  "description": "See your code as a flowchart, explained in plain English or Japanese. 11 languages including Python, JavaScript, TypeScript, Java, C, C++, C#, Go, Rust, PHP and Ruby.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Programming Languages"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeFlowchart.show",
+        "title": "Show Flowchart",
+        "category": "Flowchart",
+        "icon": {
+          "light": "media/toolbar-light.svg",
+          "dark": "media/toolbar-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "codeFlowchart.show",
+          "when": "resourceLangId =~ /^(python|javascript|javascriptreact|typescript|typescriptreact|java|c|cpp|csharp|go|rust|php|ruby)$/",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codeFlowchart.show",
+          "when": "resourceLangId =~ /^(python|javascript|javascriptreact|typescript|typescriptreact|java|c|cpp|csharp|go|rust|php|ruby)$/"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Code Flowchart",
+      "properties": {
+        "codeFlowchart.liveUpdate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Re-render the flowchart as you type."
+        },
+        "codeFlowchart.language": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "en",
+            "ja",
+            "code"
+          ],
+          "enumDescriptions": [
+            "Follow VS Code's display language",
+            "English — plain wording (\"set x to 5\")",
+            "日本語 — わかりやすい表現 (\"x を 5 にする\")",
+            "Raw code, no translation"
+          ],
+          "default": "auto",
+          "description": "Wording used inside flowchart boxes."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "fetch-wasm": "node scripts/fetch-wasm.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "1.85",
+    "@vscode/vsce": "^3.9.2",
+    "tree-sitter-c": "^0.24.1",
+    "tree-sitter-c-sharp": "^0.23.5",
+    "tree-sitter-cpp": "^0.23.4",
+    "tree-sitter-java": "^0.23.5",
+    "tree-sitter-javascript": "^0.25.0",
+    "tree-sitter-python": "^0.25.0",
+    "typescript": "5.3"
+  },
+  "dependencies": {
+    "mermaid": "^10.9.8",
+    "web-tree-sitter": "^0.27.0"
+  },
+  "icon": "media/icon.png",
+  "license": "MIT",
+  "keywords": [
+    "flowchart",
+    "visualization",
+    "diagram",
+    "beginner",
+    "learning",
+    "education",
+    "control flow",
+    "cyclomatic complexity",
+    "japanese",
+    "教育",
+    "フローチャート"
+  ],
+  "galleryBanner": {
+    "color": "#1f2430",
+    "theme": "dark"
+  },
+  "qna": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiThuHtun123/code-flowchart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SiThuHtun123/code-flowchart/issues"
+  },
+  "homepage": "https://github.com/SiThuHtun123/code-flowchart#readme"
+}

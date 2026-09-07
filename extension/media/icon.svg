@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Marketplace icon: a minimal flowchart — one decision splitting into two
+       branches. Kept to three shapes and thick strokes so it stays legible at
+       the 32px sizes the gallery actually renders. -->
+
+  <rect width="128" height="128" rx="24" fill="#1f2430"/>
+
+  <!-- start: rounded terminal -->
+  <rect x="46" y="16" width="36" height="18" rx="9"
+        fill="#34d399" stroke="#059669" stroke-width="2.5"/>
+
+  <!-- connector into the decision -->
+  <path d="M64 34 v12" stroke="#8b95a8" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M64 50 l-5 -7 h10 z" fill="#8b95a8"/>
+
+  <!-- decision: diamond -->
+  <path d="M64 50 L88 68 L64 86 L40 68 Z"
+        fill="#fbbf24" stroke="#d97706" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- branches out to two actions -->
+  <path d="M40 68 H26 v22" stroke="#8b95a8" stroke-width="3.5"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M26 94 l-5 -7 h10 z" fill="#8b95a8"/>
+
+  <path d="M88 68 H102 v22" stroke="#8b95a8" stroke-width="3.5"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M102 94 l-5 -7 h10 z" fill="#8b95a8"/>
+
+  <!-- two action boxes -->
+  <rect x="8" y="94" width="36" height="20" rx="4"
+        fill="#60a5fa" stroke="#2563eb" stroke-width="2.5"/>
+  <rect x="84" y="94" width="36" height="20" rx="4"
+        fill="#60a5fa" stroke="#2563eb" stroke-width="2.5"/>
+</svg>

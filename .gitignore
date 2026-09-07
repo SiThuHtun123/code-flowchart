@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+extension/out/
+*.vsix
+
+# The bundled grammars are ~14MB of binaries reproducible from npm.
+# scripts/fetch-wasm.js regenerates them.
+extension/media/wasm/
+
+# Editor and OS noise
+.vscode-test/
+.DS_Store
+Thumbs.db
+*.log
+
+# Exported charts (debug artifacts)
+testfiles/*.svg

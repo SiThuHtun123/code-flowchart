@@ -1,0 +1,337 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--vscode-font-family);
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+}
+
+#toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--vscode-editorWidget-background, var(--vscode-editor-background));
+  border-bottom: 1px solid var(--vscode-panel-border, transparent);
+  font-size: 12px;
+}
+
+#toolbar:empty {
+  display: none;
+}
+
+.chart-name {
+  font-weight: 600;
+}
+
+.picker-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.picker-group label {
+  opacity: 0.75;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.picker-count {
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Complexity readout: green under 6, amber to 10, red beyond. */
+.complexity {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.complexity.ok {
+  background: color-mix(in srgb, var(--vscode-testing-iconPassed, #22c55e) 20%, transparent);
+}
+
+.complexity.warn {
+  background: color-mix(in srgb, var(--vscode-editorWarning-foreground, #f59e0b) 22%, transparent);
+}
+
+.complexity.high {
+  background: color-mix(in srgb, var(--vscode-editorError-foreground, #ef4444) 22%, transparent);
+}
+
+/* Dead code: reachable from nowhere, so it can never run. */
+.dead-warning {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--vscode-editorError-foreground, #ef4444) 22%, transparent);
+  cursor: help;
+}
+
+.node.unreachable rect,
+.node.unreachable polygon {
+  stroke: var(--vscode-editorError-foreground, #ef4444) !important;
+  stroke-dasharray: 4 3;
+  opacity: 0.75;
+}
+
+.node.unreachable .nodeLabel {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  opacity: 0.85;
+}
+
+.zoom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#zoom-level {
+  min-width: 42px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.zoom button {
+  min-width: 26px;
+}
+
+.legend .key {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+
+.swatch.terminal { background: color-mix(in srgb, #22c55e 45%, transparent); }
+.swatch.decision { background: color-mix(in srgb, #f59e0b 55%, transparent); }
+.swatch.process  { background: color-mix(in srgb, #60a5fa 45%, transparent); }
+
+#toolbar button {
+  background: var(--vscode-button-secondaryBackground, transparent);
+  color: var(--vscode-button-secondaryForeground, inherit);
+  border: 1px solid var(--vscode-panel-border, currentColor);
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#toolbar button:hover {
+  background: var(--vscode-button-secondaryHoverBackground, transparent);
+}
+
+#toolbar select {
+  background: var(--vscode-dropdown-background);
+  color: var(--vscode-dropdown-foreground);
+  border: 1px solid var(--vscode-dropdown-border, transparent);
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+#chart {
+  padding: 16px;
+  overflow: auto;
+}
+
+#chart svg {
+  max-width: none;   /* let wide charts scroll rather than shrink */
+  display: block;
+}
+
+/* Node text: the theme font is often a narrow monospace at small sizes,
+   so nudge weight up for legibility once the chart is scaled down. */
+#chart .nodeLabel {
+  font-weight: 500;
+}
+
+/* Node shape colours, keyed off the classes toMermaid() emits.
+   Matching the reference: blue process, pink decision, green terminal. */
+/* Process nodes carry a light blue tint rather than the plain widget
+   background: it reads as a filled shape in both themes, and — since exports
+   inherit whatever theme is active — keeps an exported chart legible when
+   it's pasted into a white document. */
+.node rect {
+  fill: color-mix(in srgb, #60a5fa 22%, var(--vscode-editorWidget-background, #dbeafe)) !important;
+  stroke: var(--vscode-focusBorder, #60a5fa) !important;
+}
+
+.node.decision polygon {
+  fill: color-mix(in srgb, var(--vscode-inputValidation-warningBackground, #fecdd3) 60%, transparent) !important;
+  stroke: var(--vscode-inputValidation-warningBorder, #fb7185) !important;
+}
+
+.node.terminal rect {
+  fill: color-mix(in srgb, var(--vscode-testing-iconPassed, #86efac) 35%, transparent) !important;
+  stroke: var(--vscode-testing-iconPassed, #22c55e) !important;
+}
+
+.node:hover rect,
+.node:hover polygon {
+  filter: brightness(1.15);
+}
+
+.node.active rect,
+.node.active polygon {
+  stroke-width: 3px !important;
+  stroke: var(--vscode-focusBorder) !important;
+}
+
+/* A folded group's placeholder: dashed, muted, clearly "there's more here". */
+.node.folded rect {
+  fill: transparent !important;
+  stroke-dasharray: 5 3;
+  stroke: var(--vscode-descriptionForeground, #888) !important;
+}
+
+.node.folded .nodeLabel {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* A collapsed header keeps a visible cue that content is hidden under it. */
+.node.foldable.is-folded rect,
+.node.foldable.is-folded polygon {
+  stroke-dasharray: 5 3;
+}
+
+/* The [−] / [+] badge on a foldable header node. */
+.fold-toggle {
+  cursor: pointer;
+}
+
+.fold-toggle circle {
+  fill: var(--vscode-editorWidget-background, #fff);
+  stroke: var(--vscode-descriptionForeground, #888);
+  stroke-width: 1;
+}
+
+.fold-toggle text {
+  fill: var(--vscode-editor-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.fold-toggle:hover circle {
+  fill: var(--vscode-toolbar-hoverBackground, #ddd);
+  stroke: var(--vscode-focusBorder);
+}
+
+/* Non-blocking notice: the code is mid-edit and briefly unparseable. */
+.banner {
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  padding: 6px 12px;
+  font-size: 12px;
+  background: color-mix(in srgb, var(--vscode-editorWarning-foreground, #f59e0b) 18%, transparent);
+  border-bottom: 1px solid var(--vscode-editorWarning-foreground, #f59e0b);
+}
+
+.banner.blocking {
+  background: color-mix(in srgb, var(--vscode-editorError-foreground, #ef4444) 18%, transparent);
+  border-bottom-color: var(--vscode-editorError-foreground, #ef4444);
+}
+
+.too-big {
+  padding: 32px 24px;
+  max-width: 460px;
+  line-height: 1.6;
+}
+
+.too-big p {
+  margin: 0 0 12px;
+}
+
+.too-big button {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.too-big button:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+.error {
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  font-family: var(--vscode-editor-font-family);
+  white-space: pre-wrap;
+}
+
+.empty {
+  padding: 32px 24px;
+  max-width: 440px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.empty p {
+  margin: 0 0 10px;
+}
+
+.empty code {
+  font-family: var(--vscode-editor-font-family);
+  background: var(--vscode-textCodeBlock-background, rgba(127,127,127,0.15));
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* One-time interaction hints. */
+#hints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  font-size: 12px;
+  background: color-mix(in srgb, var(--vscode-focusBorder, #60a5fa) 12%, transparent);
+  border-bottom: 1px solid var(--vscode-panel-border, transparent);
+}
+
+#hints strong {
+  font-weight: 600;
+}
+
+#hints button {
+  margin-left: auto;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--vscode-panel-border, currentColor);
+  padding: 2px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+#hints button:hover {
+  background: var(--vscode-toolbar-hoverBackground, transparent);
+}
