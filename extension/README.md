@@ -6,6 +6,8 @@ flowchart — with every step explained in plain English or Japanese.
 Built for people learning to program, and for anyone staring at a function
 wondering which branch runs when.
 
+![A Python method rendered as a flowchart, with each step written in plain English](https://raw.githubusercontent.com/SiThuHtun123/code-flowchart/main/docs/example-chart.png)
+
 ---
 
 ## What it does
