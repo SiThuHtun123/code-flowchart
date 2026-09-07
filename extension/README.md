@@ -10,6 +10,21 @@ wondering which branch runs when.
 
 ---
 
+## Getting started
+
+Open any supported file, then click the flowchart icon in the editor's title
+bar, top right:
+
+![The flowchart icon in the VS Code editor title bar](https://raw.githubusercontent.com/SiThuHtun123/code-flowchart/main/docs/toolbar-button.png)
+
+The chart opens beside your code and follows along as you type.
+
+No icon? It only appears for the languages listed below — check the file's
+language mode in the status bar. You can also run **Show Flowchart** from the
+Command Palette (`Ctrl+Shift+P`).
+
+---
+
 ## What it does
 
 **One click.** A flowchart icon appears in the editor title bar for any
